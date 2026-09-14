@@ -1,0 +1,329 @@
+# CRITICAL REQUIREMENT — ACTUAL SOURCE CODE DEVELOPMENT
+
+You are not being asked to only design mockups, provide recommendations, or describe code.
+
+You must **actually build the Arua Smart Market application inside the existing `arua_smart_market` Flutter project**.
+
+All Flutter UI, screens, widgets, models, services, routing, state management, and application logic that you implement must be written as actual files in the project.
+
+For example, when you create a Farmer Dashboard, create the actual Dart files required for it inside the Flutter project.
+
+When you create the Customer Marketplace, create the actual Dart files required for it inside the Flutter project.
+
+Do not provide code only in chat.
+
+Do not create screenshots/mockups instead of implementing the UI.
+
+Do not create a separate application.
+
+Do not create a separate unrelated repository.
+
+---
+
+# SOURCE OF TRUTH AND FILE VISIBILITY
+
+The project is:
+
+`arua_smart_market`
+
+The GitHub repository is:
+
+`mercy1w-mc/arua_smart_market`
+
+All application source-code changes must be made inside this project.
+
+The developer must be able to see the changes in:
+
+1. Replit
+2. GitHub
+3. Local VS Code
+4. Android Emulator
+
+The intended workflow is:
+
+```text
+Replit
+   ↓
+Actual project files
+   ↓
+GitHub
+   ↓
+Local VS Code
+   ↓
+Flutter
+   ↓
+Android Emulator
+```
+
+Therefore, do not implement important functionality only inside Replit-specific configuration or a Replit-only runtime.
+
+The Flutter application must remain a normal Flutter project that can be opened and developed in VS Code.
+
+---
+
+# ACTUAL FLUTTER FILES
+
+When implementing features, create and modify real files such as:
+
+```text
+lib/main.dart
+
+lib/app/...
+
+lib/features/authentication/...
+
+lib/features/farmer/...
+
+lib/features/customer/...
+
+lib/shared/...
+
+lib/core/...
+```
+
+Use appropriate `.dart` files for:
+
+* Screens
+* Widgets
+* Models
+* Repositories
+* Services
+* Providers/controllers/state
+* Routes
+* Theme
+* Constants
+* Utilities
+
+Do not put the entire application into one giant Dart file.
+
+---
+
+# GITHUB SYNCHRONIZATION
+
+After making a meaningful group of changes:
+
+1. Format the Flutter code.
+2. Run Flutter analysis.
+3. Fix errors.
+4. Test the application.
+5. Review the changed files.
+6. Commit the changes to Git.
+7. Push/synchronize the changes with the GitHub repository when the GitHub integration is available.
+
+Do not leave the main implementation only in an uncommitted Replit workspace.
+
+The goal is that the GitHub repository contains the actual latest Flutter source code.
+
+---
+
+# VS CODE REQUIREMENT
+
+The local developer will use VS Code to open:
+
+`C:\Users\USER\Desktop\arua_smart_market`
+
+When the latest GitHub changes are pulled/synchronized, the developer must be able to see the actual implementation in VS Code.
+
+For example:
+
+```text
+lib/
+├── main.dart
+├── app/
+├── core/
+├── features/
+│   ├── authentication/
+│   ├── farmer/
+│   └── customer/
+└── shared/
+```
+
+The developer should be able to open the Dart files, understand the code, modify them, run Flutter commands, and continue development locally.
+
+Do not use a proprietary Replit-only implementation that prevents this.
+
+---
+
+# ANDROID EMULATOR REQUIREMENT
+
+The Flutter application must remain compatible with a local Android emulator.
+
+The developer must eventually be able to run:
+
+```bash
+flutter pub get
+flutter analyze
+flutter run
+```
+
+from the local project.
+
+The Farmer Dashboard and Customer Marketplace must therefore be genuine Flutter screens and not web-only pages.
+
+The same Flutter source code should produce the Android application.
+
+---
+
+# BACKEND RESPONSIBILITY
+
+Replit should handle the backend infrastructure where appropriate, including:
+
+* Database
+* Backend services/API
+* Authentication integration
+* Authorization
+* Secure data access
+* Product persistence
+* User persistence
+* Orders
+* Cart data
+* Wishlist data
+* Notifications data
+* Image/file storage integration
+* Backend validation
+* Security rules
+
+However, the Flutter application must contain the proper client-side Dart services/repositories needed to communicate with that backend.
+
+Use a clean separation:
+
+```text
+Flutter UI
+    ↓
+State Management
+    ↓
+Repository
+    ↓
+Service/API Layer
+    ↓
+Replit Backend
+    ↓
+Database
+```
+
+Do not put database credentials or backend secrets into Flutter source code.
+
+Use secure environment/secrets management.
+
+---
+
+# REAL DATA FLOW
+
+Do not build a fake marketplace where the farmer and customer screens only display hardcoded products.
+
+The intended functionality is:
+
+```text
+Farmer signs in
+      ↓
+Farmer Dashboard
+      ↓
+Add Product
+      ↓
+Product image upload
+      ↓
+Backend
+      ↓
+Database
+      ↓
+Product becomes available
+      ↓
+Customer opens marketplace
+      ↓
+Customer searches/browses
+      ↓
+Customer sees farmer's product
+      ↓
+Customer opens Product Details
+      ↓
+Add to Cart
+      ↓
+Checkout
+      ↓
+Order created
+      ↓
+Farmer sees the order
+```
+
+This workflow should be progressively implemented as real connected functionality.
+
+---
+
+# ROLE-BASED EXPERIENCE
+
+Implement authentication so that:
+
+```text
+SIGN IN
+   │
+   ├── FARMER ──→ Farmer Dashboard
+   │
+   └── CUSTOMER ─→ Customer Marketplace
+```
+
+The role must be stored and securely enforced by the backend.
+
+The Flutter UI should respond to the authenticated user's role.
+
+A customer should not be able to access farmer management functionality simply by navigating to a route.
+
+A farmer should not be able to access another farmer's private product-management data.
+
+Backend authorization must enforce these rules as well.
+
+---
+
+# PROFESSIONAL QUALITY
+
+The final application should look and behave like a professional agricultural marketplace.
+
+Do not stop after creating basic screens.
+
+Implement:
+
+* Professional responsive UI
+* Consistent design system
+* Real navigation
+* Loading states
+* Error states
+* Empty states
+* Form validation
+* Authentication states
+* Product images
+* Search
+* Categories
+* Cart
+* Orders
+* Farmer management
+* Customer marketplace
+* Responsive layouts
+* Secure backend communication
+* Persistent data
+
+The goal is to build a strong production-ready foundation that can continue to grow.
+
+---
+
+# DEVELOPMENT RULE
+
+Work incrementally, but **actually implement the features**.
+
+Do not ask the developer to manually copy large blocks of code from Replit into VS Code.
+
+The purpose of using Replit is for Replit to make the changes directly in the project and synchronize those changes through GitHub.
+
+The developer should primarily need to:
+
+```text
+Pull/sync changes
+      ↓
+Open VS Code
+      ↓
+Review actual Dart files
+      ↓
+Run Flutter
+      ↓
+Test on Android Emulator
+```
+
+Keep the project organized and maintainable throughout development.

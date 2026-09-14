@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/theme.dart';
+import '../../../core/data/catalog_repository.dart';
 import '../../../shared/models/product.dart';
 import '../../../shared/widgets/brand_mark.dart';
 import '../../../shared/widgets/section_heading.dart';
@@ -27,7 +28,7 @@ class _CustomerShellState extends State<CustomerShell> {
 
   List<Product> get _filteredProducts {
     final query = _searchController.text.trim().toLowerCase();
-    return demoProducts.where((product) {
+    return CatalogRepository.instance.products.where((product) {
       final matchesSearch = query.isEmpty ||
           product.name.toLowerCase().contains(query) ||
           product.category.toLowerCase().contains(query) ||
@@ -55,6 +56,7 @@ class _CustomerShellState extends State<CustomerShell> {
       showDragHandle: true,
       isScrollControlled: true,
       builder: (context) => _CartSheet(
+        products: CatalogRepository.instance.products,
         cart: _cart,
         onCheckout: () {
           Navigator.pop(context);
@@ -99,26 +101,29 @@ class _CustomerShellState extends State<CustomerShell> {
   Widget build(BuildContext context) {
     final isWide = MediaQuery.sizeOf(context).width >= 1000;
     final content = _selectedIndex == 0
-        ? _HomeContent(
-            searchController: _searchController,
-            products: _filteredProducts,
-            selectedCategory: _selectedCategory,
-            onSearchChanged: (_) => setState(() {}),
-            onCategoryChanged: (category) {
-              setState(() => _selectedCategory = category);
-            },
-            wishlist: _wishlist,
-            onToggleWishlist: (product) {
-              setState(() {
-                if (_wishlist.contains(product.id)) {
-                  _wishlist.remove(product.id);
-                } else {
-                  _wishlist.add(product.id);
-                }
-              });
-            },
-            onAddToCart: _addToCart,
-            onProductTap: _showProduct,
+        ? AnimatedBuilder(
+            animation: CatalogRepository.instance,
+            builder: (context, _) => _HomeContent(
+              searchController: _searchController,
+              products: _filteredProducts,
+              selectedCategory: _selectedCategory,
+              onSearchChanged: (_) => setState(() {}),
+              onCategoryChanged: (category) {
+                setState(() => _selectedCategory = category);
+              },
+              wishlist: _wishlist,
+              onToggleWishlist: (product) {
+                setState(() {
+                  if (_wishlist.contains(product.id)) {
+                    _wishlist.remove(product.id);
+                  } else {
+                    _wishlist.add(product.id);
+                  }
+                });
+              },
+              onAddToCart: _addToCart,
+              onProductTap: _showProduct,
+            ),
           )
         : _PlaceholderTab(
             index: _selectedIndex,
@@ -973,14 +978,19 @@ class _ProductDetailsSheet extends StatelessWidget {
 }
 
 class _CartSheet extends StatelessWidget {
-  const _CartSheet({required this.cart, required this.onCheckout});
+  const _CartSheet({
+    required this.products,
+    required this.cart,
+    required this.onCheckout,
+  });
 
+  final List<Product> products;
   final Map<String, int> cart;
   final VoidCallback onCheckout;
 
   @override
   Widget build(BuildContext context) {
-    final items = demoProducts.where((product) => cart.containsKey(product.id));
+    final items = products.where((product) => cart.containsKey(product.id));
     final subtotal = items.fold<double>(
       0,
       (sum, product) => sum + product.price * (cart[product.id] ?? 0),

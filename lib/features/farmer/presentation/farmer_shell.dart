@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/theme.dart';
+import '../../../core/data/catalog_repository.dart';
 import '../../../shared/models/product.dart';
 import '../../../shared/widgets/brand_mark.dart';
 import '../../../shared/widgets/section_heading.dart';
@@ -14,12 +15,20 @@ class FarmerShell extends StatefulWidget {
 
 class _FarmerShellState extends State<FarmerShell> {
   int _selectedIndex = 0;
-  final _products = demoProducts.take(3).toList();
 
-  void _openAddProduct() {
-    showDialog<void>(
+  Future<void> _openAddProduct() async {
+    final draft = await showDialog<Product>(
       context: context,
       builder: (context) => const _AddProductDialog(),
+    );
+    if (draft == null || !mounted) return;
+    await CatalogRepository.instance.createProduct(draft);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${draft.name} is now listed in the marketplace.'),
+        behavior: SnackBarBehavior.floating,
+      ),
     );
   }
 
@@ -27,10 +36,13 @@ class _FarmerShellState extends State<FarmerShell> {
   Widget build(BuildContext context) {
     final isWide = MediaQuery.sizeOf(context).width >= 1000;
     final content = _selectedIndex == 0
-        ? _DashboardContent(
-            products: _products,
-            onAddProduct: _openAddProduct,
-            onManageProducts: () => setState(() => _selectedIndex = 1),
+        ? AnimatedBuilder(
+            animation: CatalogRepository.instance,
+            builder: (context, _) => _DashboardContent(
+              products: CatalogRepository.instance.products,
+              onAddProduct: _openAddProduct,
+              onManageProducts: () => setState(() => _selectedIndex = 1),
+            ),
           )
         : _FarmerPlaceholderTab(index: _selectedIndex);
 
@@ -792,23 +804,38 @@ class _AddProductDialogState extends State<_AddProductDialog> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _priceController = TextEditingController();
+  final _quantityController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  String _category = 'Vegetables';
+  String _unit = 'kg';
 
   @override
   void dispose() {
     _nameController.dispose();
     _priceController.dispose();
+    _quantityController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
   void _save() {
     if (!_formKey.currentState!.validate()) return;
-    Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'Product form validated. Connect the repository to publish it.',
-        ),
-        behavior: SnackBarBehavior.floating,
+    Navigator.pop(
+      context,
+      Product(
+        id: 'draft',
+        name: _nameController.text.trim(),
+        category: _category,
+        price: double.parse(_priceController.text),
+        unit: _unit,
+        farmer: 'Moses Odongo',
+        location: 'Arua',
+        imageUrl:
+            'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=800&q=80',
+        stock: int.parse(_quantityController.text),
+        description: _descriptionController.text.trim().isEmpty
+            ? 'Fresh produce from a local Arua farm.'
+            : _descriptionController.text.trim(),
       ),
     );
   }
@@ -837,7 +864,7 @@ class _AddProductDialogState extends State<_AddProductDialog> {
                 ),
                 const SizedBox(height: 14),
                 DropdownButtonFormField<String>(
-                  value: 'Vegetables',
+                  value: _category,
                   decoration: const InputDecoration(
                     labelText: 'Category',
                     prefixIcon: Icon(Icons.category_outlined),
@@ -857,7 +884,9 @@ class _AddProductDialogState extends State<_AddProductDialog> {
                         ),
                       )
                       .toList(),
-                  onChanged: (_) {},
+                  onChanged: (value) {
+                    if (value != null) setState(() => _category = value);
+                  },
                 ),
                 const SizedBox(height: 14),
                 TextFormField(
@@ -875,7 +904,47 @@ class _AddProductDialogState extends State<_AddProductDialog> {
                   },
                 ),
                 const SizedBox(height: 14),
-                const TextField(
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _quantityController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          labelText: 'Available quantity',
+                          prefixIcon: Icon(Icons.inventory_2_outlined),
+                        ),
+                        validator: (value) {
+                          if (value == null || int.tryParse(value) == null) {
+                            return 'Enter quantity';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: DropdownButtonFormField<String>(
+                        value: _unit,
+                        decoration: const InputDecoration(labelText: 'Unit'),
+                        items: const ['kg', 'basket', 'crate', 'bag']
+                            .map(
+                              (unit) => DropdownMenuItem(
+                                value: unit,
+                                child: Text(unit),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (value) {
+                          if (value != null) setState(() => _unit = value);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 14),
+                TextField(
+                  controller: _descriptionController,
                   maxLines: 3,
                   decoration: InputDecoration(
                     labelText: 'Description',
