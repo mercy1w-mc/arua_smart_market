@@ -1,0 +1,1094 @@
+You are the lead senior Flutter engineer, UI/UX designer, backend engineer, database architect, and application security engineer responsible for developing **Arua Smart Market**, a professional agricultural marketplace application.
+
+## 1. PROJECT CONTEXT
+
+The existing project is a Flutter application named:
+
+**arua_smart_market**
+
+The project has already been imported from GitHub into Replit.
+
+The project must remain inside the existing:
+
+**arua_smart_market**
+
+folder/repository.
+
+The GitHub repository is the source-control project, and changes made in Replit must remain compatible with the local Flutter project so they can be pulled/synchronized and viewed in **VS Code**.
+
+Do NOT create a separate replacement project.
+
+Do NOT create an unrelated blank Flutter project.
+
+Do NOT destroy or unnecessarily restructure the existing Flutter project.
+
+First inspect the existing project structure and understand the current implementation before making changes.
+
+---
+
+# 2. MAIN OBJECTIVE
+
+Transform the existing Flutter starter/project into a professional, production-ready foundation for **Arua Smart Market**.
+
+Arua Smart Market is an agricultural marketplace connecting:
+
+### FARMERS
+
+Farmers can:
+
+* Create and manage their accounts
+* Create farmer profiles
+* Add agricultural products
+* Upload product images
+* Set product names
+* Set categories
+* Set prices
+* Set available quantities
+* Add product descriptions
+* Edit products
+* Delete/deactivate products
+* View their products
+* View incoming orders
+* Manage order statuses
+* View sales
+* View earnings
+* View notifications
+* Manage their profile
+* Monitor marketplace activity related to their products
+
+### CUSTOMERS
+
+Customers can:
+
+* Create and manage accounts
+* Browse agricultural products
+* Search for products
+* Filter products
+* Browse categories
+* View product details
+* See product images
+* See prices
+* See farmer information
+* Add products to cart
+* Change quantities
+* Remove products from cart
+* Proceed to checkout
+* Place orders
+* View order history
+* Track order status
+* Save/wishlist products
+* Receive notifications
+* Manage their profile
+
+The application must feel like a serious modern marketplace product rather than a basic Flutter demo.
+
+---
+
+# 3. ROLE-BASED APPLICATION
+
+The most important requirement is role-based access.
+
+The application must support at least:
+
+```text
+FARMER
+CUSTOMER
+```
+
+The authentication system must determine the user's role.
+
+### If a user signs in as FARMER:
+
+Automatically take them to:
+
+**Farmer Dashboard**
+
+They must NOT see the customer marketplace interface as their primary interface.
+
+### If a user signs in as CUSTOMER:
+
+Automatically take them to:
+
+**Customer Home/Marketplace**
+
+They must NOT see the farmer management dashboard as their primary interface.
+
+Implement role-based routing/navigation cleanly.
+
+The architecture should make it possible to add an ADMIN role later without rebuilding the authentication system.
+
+---
+
+# 4. AUTHENTICATION
+
+Implement a professional authentication architecture.
+
+Include:
+
+* Sign up
+* Sign in
+* Sign out
+* Password handling
+* Authentication state
+* Role selection/assignment
+* Session persistence
+* Protected routes
+* Role-based route protection
+* Appropriate validation
+* Loading states
+* Error states
+* Secure authentication practices
+
+Do NOT store passwords directly in the Flutter application.
+
+Authentication and sensitive user data should be handled through the backend/authentication service.
+
+The Flutter application should communicate with the backend through a clean service/repository architecture.
+
+---
+
+# 5. BACKEND, DATABASE AND SECURITY
+
+Replit should handle the backend architecture, API/data layer, database integration, and security foundation.
+
+Do NOT put sensitive credentials or secrets directly inside Flutter source code.
+
+Use environment variables/secrets where appropriate.
+
+The backend should be designed around secure role-based access.
+
+At minimum, model the following entities:
+
+```text
+Users
+FarmerProfiles
+CustomerProfiles
+Products
+Categories
+CartItems
+Orders
+OrderItems
+Payments
+Notifications
+Wishlists
+```
+
+Use appropriate relationships between these entities.
+
+For example:
+
+```text
+User
+ ├── FarmerProfile
+ └── CustomerProfile
+
+Farmer
+ └── Products
+
+Customer
+ ├── Cart
+ ├── Orders
+ ├── Wishlist
+ └── Notifications
+
+Order
+ └── OrderItems
+
+OrderItem
+ └── Product
+```
+
+A farmer must only be able to manage their own products and farmer-related data.
+
+A customer must only be able to access their own private customer data.
+
+Never trust role information supplied only by the client.
+
+Backend authorization must verify permissions.
+
+---
+
+# 6. PROFESSIONAL FARMER DASHBOARD
+
+Create a polished farmer dashboard.
+
+The farmer dashboard should contain a professional overview such as:
+
+### Dashboard Header
+
+* Farmer greeting
+* Farmer profile/avatar
+* Notification icon
+* Settings/profile access
+
+### Statistics Cards
+
+Include cards such as:
+
+* Total Products
+* Active Products
+* Pending Orders
+* Completed Orders
+* Total Sales
+* Earnings
+
+### Quick Actions
+
+Provide professional buttons/cards for:
+
+* Add Product
+* Manage Products
+* View Orders
+* View Sales
+* View Earnings
+
+### Recent Orders
+
+Display:
+
+* Order ID
+* Customer
+* Product
+* Quantity
+* Amount
+* Date
+* Status
+
+### Product Performance
+
+Include useful marketplace information such as:
+
+* Best-selling products
+* Product sales
+* Inventory status
+* Low-stock warnings
+
+### Farmer Navigation
+
+Use responsive navigation appropriate for mobile and larger screens.
+
+Possible sections:
+
+```text
+Dashboard
+Products
+Orders
+Sales
+Earnings
+Notifications
+Profile
+Settings
+```
+
+The interface should feel modern, clean, trustworthy, and professional.
+
+---
+
+# 7. FARMER PRODUCT MANAGEMENT
+
+Create a professional product management experience.
+
+Farmers should be able to:
+
+### Add Product
+
+Fields:
+
+* Product name
+* Category
+* Description
+* Price
+* Unit
+* Available quantity
+* Product images
+* Location
+* Availability status
+
+Examples of agricultural categories:
+
+* Fresh Produce
+* Fruits
+* Vegetables
+* Grains
+* Cereals
+* Legumes
+* Tubers
+* Poultry
+* Livestock
+* Dairy
+* Seeds
+* Farm Inputs
+* Other
+
+Allow farmers to upload product images.
+
+Validate required fields.
+
+Provide clear success/error feedback.
+
+### Manage Products
+
+Display farmer-owned products in professional cards/list layouts.
+
+Include:
+
+* Product image
+* Product name
+* Category
+* Price
+* Stock
+* Status
+* Edit action
+* Delete/deactivate action
+
+Add search/filter/sorting where useful.
+
+---
+
+# 8. PROFESSIONAL CUSTOMER INTERFACE
+
+Create a modern agricultural marketplace interface.
+
+The customer experience should include:
+
+### Home
+
+A professional marketplace home screen containing:
+
+* App branding
+* Search bar
+* Location/context where appropriate
+* Notifications
+* Cart
+* User profile
+* Promotional/hero section
+* Product categories
+* Featured products
+* Recently added products
+* Popular products
+* Recommended products
+
+---
+
+# 9. CUSTOMER SEARCH
+
+The customer home page must have a prominent search bar.
+
+Customers should be able to search products by:
+
+* Product name
+* Category
+* Farmer
+* Relevant searchable fields
+
+Search should provide a professional user experience.
+
+Include appropriate:
+
+* Empty states
+* Loading states
+* No-results states
+* Error states
+
+---
+
+# 10. CUSTOMER PRODUCT CARDS
+
+Create professional product cards.
+
+Each card should show:
+
+* Product image
+* Product name
+* Price
+* Unit
+* Farmer name
+* Availability
+* Wishlist/favorite button
+* Add-to-cart button
+
+Cards must be responsive and adapt to different screen sizes.
+
+---
+
+# 11. PRODUCT DETAILS
+
+Create a professional product details screen.
+
+Display:
+
+* Large product images
+* Product name
+* Price
+* Unit
+* Description
+* Farmer information
+* Availability
+* Quantity selector
+* Add to Cart
+* Buy/Checkout action
+* Wishlist action
+
+The screen should look like a real e-commerce marketplace.
+
+---
+
+# 12. CUSTOMER CART
+
+Implement a complete cart interface.
+
+Include:
+
+* Product image
+* Product name
+* Farmer
+* Price
+* Quantity selector
+* Remove item
+* Subtotal
+* Delivery fee placeholder/logic
+* Total
+* Checkout button
+
+Cart state must be connected to the backend/data layer rather than being only temporary hardcoded UI.
+
+---
+
+# 13. CHECKOUT
+
+Create a professional checkout flow.
+
+Include sections for:
+
+* Customer information
+* Delivery information
+* Order summary
+* Selected products
+* Quantities
+* Subtotal
+* Delivery fee
+* Total
+* Payment method placeholder/integration-ready architecture
+* Place Order
+
+The architecture should allow real payment integration later.
+
+Do NOT fake successful payments.
+
+---
+
+# 14. CUSTOMER ORDERS
+
+Create:
+
+### Orders List
+
+Display:
+
+* Order ID
+* Date
+* Amount
+* Number of products
+* Status
+
+### Order Details
+
+Display:
+
+* Products
+* Quantities
+* Farmer
+* Pricing
+* Delivery information
+* Order status
+* Timeline where appropriate
+
+Order statuses can include:
+
+```text
+Pending
+Confirmed
+Processing
+Ready
+Out for Delivery
+Delivered
+Cancelled
+```
+
+---
+
+# 15. CUSTOMER PROFILE
+
+Create a professional profile section.
+
+Include:
+
+* Profile photo
+* Name
+* Email
+* Phone
+* Delivery address
+* Account information
+* Order history access
+* Wishlist
+* Notifications
+* Settings
+* Sign out
+
+---
+
+# 16. WISHLIST
+
+Customers should be able to save products.
+
+Implement:
+
+* Add to wishlist
+* Remove from wishlist
+* Wishlist screen
+* Product navigation from wishlist
+
+Persist wishlist data through the backend.
+
+---
+
+# 17. NOTIFICATIONS
+
+Create a reusable notification architecture.
+
+Farmer notifications can include:
+
+* New order
+* Order update
+* Product status
+* Low inventory
+* Marketplace announcements
+
+Customer notifications can include:
+
+* Order confirmation
+* Order status updates
+* Delivery updates
+* Marketplace announcements
+
+Design the system so push notifications can be added later.
+
+---
+
+# 18. PROFESSIONAL UI/UX
+
+The application must have a high-quality modern design.
+
+Use:
+
+* Consistent spacing
+* Professional typography
+* Rounded cards where appropriate
+* Clear hierarchy
+* High-quality icons
+* Clean forms
+* Professional buttons
+* Appropriate shadows/elevation
+* Good empty states
+* Loading indicators
+* Error states
+* Success feedback
+* Responsive layouts
+* Accessible touch targets
+
+The design should communicate:
+
+**Agriculture + Trust + Marketplace + Modern Technology**
+
+Avoid making it look like a generic template.
+
+The branding should be appropriate for:
+
+**Arua Smart Market**
+
+Use a professional agricultural visual identity.
+
+Do not overuse colors.
+
+Maintain strong contrast and readability.
+
+---
+
+# 19. RESPONSIVE DESIGN
+
+This is extremely important.
+
+The application must work properly on:
+
+* Android phones
+* Android tablets
+* Different screen sizes
+* Flutter web where applicable
+* Desktop-sized layouts where practical
+
+Do not hard-code dimensions that cause overflow.
+
+Use responsive Flutter techniques such as:
+
+* LayoutBuilder
+* MediaQuery where appropriate
+* Flexible
+* Expanded
+* Wrap
+* GridView
+* Slivers where useful
+* Responsive navigation
+
+For mobile, use appropriate bottom navigation/navigation drawers.
+
+For larger screens, use appropriate side navigation and multi-column layouts.
+
+---
+
+# 20. FLUTTER ARCHITECTURE
+
+Do not put the entire application into one or two giant files.
+
+Maintain a clean scalable architecture.
+
+Organize code by features and responsibilities.
+
+Prefer a structure similar to:
+
+```text
+lib/
+├── main.dart
+├── app/
+│   ├── app.dart
+│   ├── router/
+│   └── theme/
+│
+├── core/
+│   ├── constants/
+│   ├── errors/
+│   ├── network/
+│   ├── services/
+│   ├── storage/
+│   ├── utils/
+│   └── widgets/
+│
+├── features/
+│   ├── authentication/
+│   ├── farmer/
+│   │   ├── dashboard/
+│   │   ├── products/
+│   │   ├── orders/
+│   │   ├── sales/
+│   │   ├── earnings/
+│   │   ├── notifications/
+│   │   └── profile/
+│   │
+│   └── customer/
+│       ├── home/
+│       ├── categories/
+│       ├── products/
+│       ├── cart/
+│       ├── checkout/
+│       ├── orders/
+│       ├── wishlist/
+│       ├── notifications/
+│       └── profile/
+│
+└── shared/
+    ├── models/
+    ├── widgets/
+    └── enums/
+```
+
+However, this is a guideline, not permission to blindly overwrite the existing structure.
+
+First inspect the existing project.
+
+Reuse good existing code where possible.
+
+---
+
+# 21. STATE MANAGEMENT
+
+Use a professional, maintainable state-management approach.
+
+Keep UI, business logic, repositories, and backend services separated.
+
+Avoid putting database/API logic directly inside widgets.
+
+The code should be maintainable as the application grows.
+
+---
+
+# 22. DATABASE-DRIVEN UI
+
+Avoid building the marketplace entirely with hardcoded products.
+
+Create the database/data models and repository/service layer so that:
+
+**Farmer uploads product → product is stored → customer can retrieve and see it**
+
+The intended flow is:
+
+```text
+Farmer
+   ↓
+Add Product
+   ↓
+Backend/API
+   ↓
+Database
+   ↓
+Products
+   ↓
+Customer Marketplace
+   ↓
+Search/Browse
+   ↓
+Product Details
+   ↓
+Cart
+   ↓
+Checkout
+   ↓
+Order
+   ↓
+Farmer Orders
+```
+
+This is a core requirement.
+
+---
+
+# 23. SAMPLE/DEMO DATA
+
+For development, create sensible seed/demo data where appropriate so the UI can be tested.
+
+However, clearly separate demo data from production data.
+
+Do not make the application dependent on fake hardcoded data.
+
+---
+
+# 24. ERROR HANDLING
+
+Implement professional error handling.
+
+Handle:
+
+* Network errors
+* Authentication errors
+* Database errors
+* Empty results
+* Invalid forms
+* Missing data
+* Image upload errors
+* Unauthorized access
+* Expired sessions
+
+Do not allow the application to crash because a backend request fails.
+
+Provide useful user-friendly messages.
+
+---
+
+# 25. SECURITY
+
+Treat security as a first-class requirement.
+
+Never expose:
+
+* Database passwords
+* API secrets
+* Private keys
+* Authentication secrets
+* Service credentials
+
+inside the Flutter source code or GitHub repository.
+
+Use Replit Secrets/environment variables for sensitive backend configuration.
+
+Implement backend authorization.
+
+Validate incoming data.
+
+Ensure users cannot manipulate another user's private data simply by changing IDs in the client.
+
+---
+
+# 26. GITHUB AND VSCODE WORKFLOW
+
+GitHub is the source-control repository.
+
+Replit is responsible for backend/database development and can modify the project.
+
+All changes must remain organized so they can be synchronized with GitHub and subsequently viewed in VS Code.
+
+Before making major changes:
+
+1. Inspect the repository.
+2. Understand the existing Flutter structure.
+3. Preserve existing working code.
+4. Make changes incrementally.
+5. Run formatting.
+6. Run static analysis.
+7. Test the application.
+8. Fix errors.
+9. Keep the repository in a buildable state.
+
+Do not make destructive changes without a clear reason.
+
+---
+
+# 27. EMULATOR COMPATIBILITY
+
+The Flutter application must remain compatible with a normal Android Flutter development environment.
+
+Ensure that the project can be run using:
+
+```bash
+flutter pub get
+flutter analyze
+flutter run
+```
+
+Do not introduce unnecessary dependencies that prevent Android builds.
+
+Avoid features that only work inside Replit.
+
+The actual Flutter application must remain a normal Flutter application that can run on an Android emulator.
+
+---
+
+# 28. WEB/GITHUB PREVIEW
+
+Keep the project structured so that the source code and changes can be tracked through GitHub.
+
+Where Flutter Web is supported by the existing project, ensure the application can also be built/tested for web.
+
+Do not confuse GitHub source-code hosting with application hosting.
+
+The goal is:
+
+```text
+VS Code
+   ↕
+GitHub
+   ↕
+Replit
+   ↓
+Backend + Database
+```
+
+and:
+
+```text
+Flutter application
+   ↓
+Android Emulator
+```
+
+The same Flutter source should remain usable locally.
+
+---
+
+# 29. ADMIN READINESS
+
+Do not build the complete admin dashboard yet unless required by the existing code.
+
+However, design the authentication, database, authorization, and architecture so that an ADMIN role can be added later.
+
+Use extensible roles such as:
+
+```text
+customer
+farmer
+admin
+```
+
+---
+
+# 30. NO UNNECESSARY REWRITES
+
+This is very important.
+
+Before modifying anything:
+
+* Inspect all existing Flutter files.
+* Inspect `pubspec.yaml`.
+* Inspect `lib/`.
+* Inspect existing routes.
+* Inspect existing theme.
+* Inspect existing authentication code if any.
+* Inspect existing backend configuration if any.
+
+Then improve the project rather than blindly replacing it.
+
+Preserve useful existing functionality.
+
+---
+
+# 31. IMPLEMENTATION PRIORITY
+
+Work in this order:
+
+### PHASE 1 — Foundation
+
+* Inspect project
+* Clean architecture
+* Theme
+* Routing
+* Authentication foundation
+* Role model
+
+### PHASE 2 — Backend
+
+* Database
+* Authentication
+* User profiles
+* Roles
+* Security rules
+* API/service layer
+
+### PHASE 3 — Farmer
+
+* Farmer dashboard
+* Farmer profile
+* Product creation
+* Product image upload
+* Product management
+* Farmer orders
+* Sales
+* Earnings
+* Notifications
+
+### PHASE 4 — Customer
+
+* Customer home
+* Search
+* Categories
+* Product listing
+* Product details
+* Cart
+* Checkout
+* Orders
+* Wishlist
+* Notifications
+* Profile
+
+### PHASE 5 — Integration
+
+Connect:
+
+```text
+Farmer Product Creation
+        ↓
+Database
+        ↓
+Customer Product Discovery
+        ↓
+Cart
+        ↓
+Order
+        ↓
+Farmer Order Management
+```
+
+### PHASE 6 — Quality
+
+* Responsive testing
+* Flutter analyze
+* Formatting
+* Android emulator testing
+* Web testing where applicable
+* Error handling
+* Security review
+* Performance review
+
+---
+
+# 32. IMPORTANT DEVELOPMENT RULE
+
+Do not simply create attractive static screens.
+
+Build the application so the major workflows are connected.
+
+For example:
+
+A farmer adding:
+
+**Tomatoes — UGX 5,000/kg — 100 kg**
+
+should ultimately result in a product record that the customer marketplace can retrieve and display.
+
+A customer adding that product to their cart should create actual cart state/data.
+
+Placing an order should create an order record.
+
+That order should become visible in the farmer's order dashboard.
+
+This application must progressively become a real marketplace system, not merely a UI prototype.
+
+---
+
+# 33. CURRENT TASK
+
+Start by inspecting the existing **arua_smart_market** project.
+
+Do NOT immediately rewrite everything.
+
+First identify:
+
+1. Existing Flutter structure
+2. Existing dependencies
+3. Existing routes
+4. Existing theme
+5. Existing authentication
+6. Existing backend configuration
+7. Existing screens
+8. Existing models/services
+9. What needs to be preserved
+10. What needs to be added
+
+Then implement the foundation and role-based application progressively.
+
+After each major phase:
+
+* Run the appropriate Flutter checks.
+* Fix errors.
+* Keep the application buildable.
+* Explain what was changed.
+* Identify anything that still needs configuration.
+
+The final target is a professional **Arua Smart Market** application with two fully differentiated experiences:
+
+```text
+                    ARUA SMART MARKET
+                           │
+                       SIGN IN
+                           │
+              ┌────────────┴────────────┐
+              │                         │
+           FARMER                    CUSTOMER
+              │                         │
+              ▼                         ▼
+      FARMER DASHBOARD          CUSTOMER MARKETPLACE
+              │                         │
+      ┌───────┼────────┐        ┌───────┼──────────┐
+      │       │        │        │       │          │
+   Products Orders  Earnings  Search  Products    Cart
+                              │                  │
+                              └──────┬───────────┘
+                                     ▼
+                                  Checkout
+                                     │
+                                     ▼
+                                   Orders
+                                     │
+                                     ▼
+                              Farmer Dashboard
+```
+
+Build this professionally, securely, responsively, and incrementally.
+
+**Do not create a separate project. Work directly in the existing `arua_smart_market` repository.**
