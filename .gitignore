@@ -33,6 +33,12 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# Replit-only backend implementation and its private runtime dependencies.
+/server/
+/package.json
+/package-lock.json
+/node_modules/
+
 # Symbolication related
 app.*.symbols
 

@@ -15,9 +15,30 @@ feature work in VS Code or an Android development environment.
   summary, order preview, and validated add-product form.
 
 The customer and farmer experiences currently use clearly labeled local demo
-data. Authentication, persistence, image upload, payments, and backend
-authorization are intentionally left as the next integration phase; no fake
-successful payments or production credentials are included.
+data while the backend integration is being staged. The client-side
+`CatalogRepository` now connects farmer-created products to the customer
+marketplace during the current session.
+
+## Replit-only backend
+
+The Replit environment now contains a private Node/PostgreSQL API in
+`server/`. It is intentionally ignored by Git so the original GitHub
+repository receives only the Flutter frontend. The API currently provides:
+
+- Persistent users, roles, profiles, sessions, categories, products, carts,
+  orders, wishlists, and notifications schema
+- Password hashing with `bcryptjs`
+- Session cookies and bearer-token support
+- Customer/farmer role enforcement
+- Public product search
+- Farmer-owned product create, update, list, and archive endpoints
+- Ownership checks that prevent customers or other farmers from managing data
+
+The `Arua Smart Market API` workflow runs this backend on port 5000. Backend
+credentials are read from Replit-managed environment variables; none are
+stored in Flutter source or GitHub. Checkout, image storage, and the Flutter
+API client remain the next integration phase. No fake successful payments are
+implemented.
 
 ## Local Flutter commands
 
